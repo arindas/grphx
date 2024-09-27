@@ -54,11 +54,11 @@ class VertexNotFound:
 
 class Graph[E, V](ABC):
     @abstractmethod
-    def vertices() -> Iterable[Vertex[V]]:
+    def vertices(self) -> Iterable[Vertex[V]]:
         raise NotImplementedError()
 
     @abstractmethod
-    def edges() -> Iterable[Edge[E, V]]:
+    def edges(self) -> Iterable[Edge[E, V]]:
         raise NotImplementedError()
 
     @abstractmethod

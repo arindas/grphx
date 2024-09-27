@@ -1,4 +1,4 @@
-from typing import Deque, Iterator, Optional, Set
+from typing import Deque, Iterable, Optional, Set
 from dataclasses import dataclass
 from enum import StrEnum, auto
 from collections import deque
@@ -36,7 +36,7 @@ type TraversalItem[V, E] = Result[Visit[V, E], CycleFound]
 def traverse[
     E, V
 ](graph: Graph[E, V], start_vertex_id: VId, traversal: Traversal) -> Result[
-    Iterator[TraversalItem[V, E]], VertexNotFound
+    Iterable[TraversalItem[V, E]], VertexNotFound
 ]:
 
     match graph.get_vertex_by_id(start_vertex_id):
