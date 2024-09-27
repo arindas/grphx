@@ -4,7 +4,7 @@ from enum import StrEnum, auto
 from collections import deque
 
 from grphx.common import Err, Ok, Result
-from grphx.types import EdgeAssociation, Graph, VId, Vertex, VertexNotFound
+from grphx.types import EdgeInfo, EdgeAssociation, Graph, VId, Vertex, VertexNotFound
 
 
 class TraversalKind(StrEnum):
@@ -22,7 +22,7 @@ class Traversal:
 class Visit[V, E]:
     vertex: Vertex[V]
     parent: Optional[Vertex[V]] = None
-    edge_inner: Optional[E] = None
+    edge_info: Optional[EdgeInfo[E]] = None
 
 
 @dataclass
@@ -67,13 +67,18 @@ def traverse[
                 adjacent_vertex = edge.other_vertex(vertex.id)
 
                 if adjacent_vertex.id in visited:
-                    yield Err(CycleFound(adjacent_vertex.id))
+                    match (traversal.kind, traversal.edge_association):
+                        case (
+                            TraversalKind.DFS,
+                            EdgeAssociation.INCOMING | EdgeAssociation.OUTGOING,
+                        ):
+                            yield Err(CycleFound(adjacent_vertex.id))
                     continue
 
                 new_visit = Visit(
                     vertex=adjacent_vertex,
                     parent=vertex,
-                    edge_inner=edge.inner,
+                    edge_info=edge.info,
                 )
 
                 match traversal.kind:

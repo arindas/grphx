@@ -17,15 +17,28 @@ class Vertex[V]:
 
 
 @dataclass
-class Edge[E, V]:
+class EdgeInfo[E]:
     id: EId
     inner: E
+
+
+@dataclass
+class Edge[E, V]:
+    info: EdgeInfo[E]
 
     source: Vertex[V]
     dest: Vertex[V]
 
     def other_vertex(self, vertex_id: VId) -> Vertex[V]:
         return self.dest if vertex_id == self.source.id else self.source
+
+    @property
+    def id(self) -> EId:
+        return self.info.id
+
+    @property
+    def inner(self) -> E:
+        return self.info.inner
 
 
 class EdgeAssociation(StrEnum):
