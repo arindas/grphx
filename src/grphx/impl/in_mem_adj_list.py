@@ -35,8 +35,8 @@ class InMemAdjListGraph[E, V](Graph[E, V]):
 
     edge_record_db: Dict[EId, EdgeRecord[E, V]]
 
-    vertex_source_edge_list: Dict[VId, IntrusiveList[SourceList, EId]]
-    vertex_dest_edge_list: Dict[VId, IntrusiveList[DestList, EId]]
+    vertex_source_edge_list_db: Dict[VId, IntrusiveList[SourceList, EId]]
+    vertex_dest_edge_list_db: Dict[VId, IntrusiveList[DestList, EId]]
 
     highest_vid: VId = 0
     highest_eid: EId = 0
