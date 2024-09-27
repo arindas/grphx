@@ -29,6 +29,7 @@ class IntrusiveListRef[L, T]:
 class IntrusiveList[L, T]:
     head: Optional[IntrusiveListRef[L, T]]
     tail: Optional[IntrusiveListRef[L, T]]
+    size: int
 
     def push_front(self, ref: IntrusiveListRef[L, T]):
         ref.next = self.head
@@ -39,6 +40,7 @@ class IntrusiveList[L, T]:
             self.tail = ref
 
         self.head = ref
+        self.size += 1
 
     def push_back(self, ref: IntrusiveListRef[L, T]):
         ref.prev = self.tail
@@ -49,6 +51,7 @@ class IntrusiveList[L, T]:
             self.head = ref
 
         self.tail = ref
+        self.size += 1
 
     def remove_head(self):
         match self.head:
@@ -63,6 +66,9 @@ class IntrusiveList[L, T]:
             case x:
                 self.head.prev = None
 
+        if self.size > 0:
+            self.size -= 1
+
     def remove_tail(self):
         match self.tail:
             case None:
@@ -75,6 +81,9 @@ class IntrusiveList[L, T]:
                 self.head = None
             case x:
                 self.tail.next = None
+
+        if self.size > 0:
+            self.size -= 1
 
     def remove(self, ref: IntrusiveListRef[L, T]):
         match ref:
@@ -89,3 +98,6 @@ class IntrusiveList[L, T]:
 
                 if ref.next is not None:
                     ref.next.prev = ref.prev
+
+        if self.size > 0:
+            self.size -= 1

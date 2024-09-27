@@ -69,10 +69,6 @@ class Graph[E, V](ABC):
     def get_vertex_by_id(self, vertex_id: VId) -> Optional[Vertex[V]]:
         raise NotImplementedError()
 
-    def get_vertex_by_inner(self, vertex_inner: V) -> Optional[Vertex[V]]:
-        _ = vertex_inner
-        raise None
-
     @abstractmethod
     def remove_vertex(self, vertex_id: VId) -> Optional[Vertex[V]]:
         raise NotImplementedError()

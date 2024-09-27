@@ -54,3 +54,6 @@ class InMemAdjListGraph[E, V](Graph[E, V]):
         self.vertex_db[vertex.id] = vertex
 
         return vertex
+
+    def get_vertex_by_id(self, vertex_id: VId) -> Optional[Vertex[V]]:
+        return self.vertex_db.get(vertex_id, None)
