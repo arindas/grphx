@@ -50,9 +50,10 @@ class InMemAdjListGraph[E, V](Graph[E, V]):
 
     def insert_vertex(self, vertex_inner: V) -> Vertex[V]:
         vertex = Vertex(id=self.highest_vid + 1, inner=vertex_inner)
-        self.highest_vid = vertex.id
 
         self.vertex_db[vertex.id] = vertex
+
+        self.highest_vid = vertex.id
 
         return vertex
 
@@ -101,6 +102,8 @@ class InMemAdjListGraph[E, V](Graph[E, V]):
             dest_id, IntrusiveList()
         )
         vertex_dest_edge_list.push_back(edge_record.dest_edge_list_ref)
+
+        self.edge_record_db[edge.id] = edge_record
 
         self.highest_eid = edge.id
 
