@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Self, Union
+from typing import Iterable, Optional, Self, Union
 
 
 @dataclass
@@ -27,9 +27,9 @@ class IntrusiveListRef[L, T]:
 
 @dataclass
 class IntrusiveList[L, T]:
-    head: Optional[IntrusiveListRef[L, T]]
-    tail: Optional[IntrusiveListRef[L, T]]
-    size: int
+    head: Optional[IntrusiveListRef[L, T]] = None
+    tail: Optional[IntrusiveListRef[L, T]] = None
+    size: int = 0
 
     def push_front(self, ref: IntrusiveListRef[L, T]):
         ref.next = self.head
@@ -101,3 +101,16 @@ class IntrusiveList[L, T]:
 
         if self.size > 0:
             self.size -= 1
+
+    def items(self) -> Iterable[T]:
+        def generator():
+            ref = self.head
+
+            if ref is None:
+                return
+
+            yield ref.inner_ref
+
+            ref = ref.next
+
+        return generator()
